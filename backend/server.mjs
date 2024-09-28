@@ -1,7 +1,10 @@
 import express from "express";
+import cors from "cors";
 
 const app = express();
-
+// Middleware
+app.use(cors()); // Allow cross-origin requests
+app.use(express.json()); // Parse JSON requests
 const PORT = 3000;
 
 const users = [
@@ -24,4 +27,15 @@ const users = [
     age: 24,
   },
 ];
-
+// Get Request
+app.get("/api/users", (req, res) => {
+  try {
+    res
+      .status(200)
+      .json({ message: "Fetching all users from the array", data: users });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "An error occurred", error: error.message });
+  }
+});

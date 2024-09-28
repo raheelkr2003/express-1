@@ -39,3 +39,21 @@ app.get("/api/users", (req, res) => {
       .json({ message: "An error occurred", error: error.message });
   }
 });
+// Post Request
+app.post("/api/users", (req, res) => {
+  try {
+    const body = req.body;
+
+    const newUser = {
+      id: users.length + 1,
+      ...body,
+    };
+
+    users.push(newUser);
+    res.status(201).json({ message: "New user created!", data: newUser });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "An error occurred", error: error.message });
+  }
+});
